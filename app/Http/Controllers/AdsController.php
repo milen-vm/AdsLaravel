@@ -13,14 +13,28 @@ class AdsController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->has('is_free')) {
-            $ads = Ad::where('is_free', $request->get('is_free'))
-                ->orderBy('created_at', 'desc')
-                ->paginate(Ad::ADS_LIST_PAGE_SIZE)
-                ->appends(['is_free' => $request->get('is_free')]);
-        } else {
-            $ads = Ad::latest()->paginate(Ad::ADS_LIST_PAGE_SIZE);
+        $ads = new Ad();
+        $queries = [];
+        $columns = [
+            'is_free',
+        ];
+
+        foreach ($columns as $column) {
+            if ($request->has($columns)) {
+                $ads = $ads->where($column, $request->get($column));
+                $queries[$column] = $request->get($column);
+            }
         }
+
+        if ($request->has('sort')) {
+            $ads = $ads->orderBy('created_at', $request->get('sort'));
+            $queries['sort'] = $request->get('sort');
+        } else {
+            $ads = $ads->orderBy('created_at', 'desc');
+        }
+
+        $ads = $ads->paginate(Ad::ADS_LIST_PAGE_SIZE)->appends($queries);
+//      $ads = Ad::latest()->paginate(Ad::ADS_LIST_PAGE_SIZE);
 
         return view('ads.index', ['ads' => $ads,]);
     }

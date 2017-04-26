@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'AdsController@index');
+Route::get('/', 'AdsController@index')->name('ad.index');
 
 Route::get('/ads/create', 'AdsController@create');
 
