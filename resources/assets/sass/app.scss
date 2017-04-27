@@ -7,3 +7,12 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  margin-bottom: 100px;
+
+  footer {
+    margin-bottom: 0 !important;
+    margin-top: 20px;
+  }
+}

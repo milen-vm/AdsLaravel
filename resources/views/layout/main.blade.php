@@ -5,28 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    {{--<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>--}}
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--}}
 
-    <!-- Optional theme -->
+<!-- Optional theme -->
     <link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Compiled css -->
+    <link rel="stylesheet" href="/css/app.css">
 
+    <!-- Latest compiled and minified JavaScript -->
+    {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>--}}
+
+    <!-- Compiled js -->
+    <script src="/js/app.js"></script>
     <title>Ads</title>
 
     <style>
-        footer {
-            margin-bottom: 0 !important;
-            margin-top: 20px;
-        }
-
-        body {
-            margin-bottom: 100px;
-        }
     </style>
 </head>
 <body>

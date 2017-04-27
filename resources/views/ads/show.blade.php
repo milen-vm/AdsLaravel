@@ -3,7 +3,6 @@
 @section('content')
 <div class="col-lg-6 col-lg-offset-3">
     <h3 class="text-center">{{ $ad->title }}</h3>
-    <p class="text-center"><a href="{{ url('/ads/' . $ad->id) . '/edit' }}">[edit]</a></p>
     <div>
         <p>{{ $ad->text }}</p>
     </div>
@@ -18,8 +17,37 @@
     </div>
     <div class="clearfix"></div>
     <br>
-    <div class="text-center">
+    <div class="text-right">
+        <a class="btn btn-success" href="{{ url('/ads/' . $ad->id) . '/edit' }}">Edit</a>
         @include('ads.partial.delete', ['id' => $ad->id])
+    </div>
+
+    <hr>
+
+    <div class="comments">
+        <ul class="list-group">
+
+        @foreach($ad->comments as $item)
+            <li class="list-group-item">
+                <strong>{{ $item->created_at->diffForHumans() }}:&nbsp;</strong>
+                {{ $item->text }}
+            </li>
+        @endforeach
+
+        </ul>
+    </div>
+
+    <hr>
+
+    @include('layout.errors')
+
+    <div>
+        {!! Form::open(['url' => url('/ads/' . $ad->id . '/comments'), 'method' => 'post',]) !!}
+
+        @include('comments.partial.form', ['comment' => $comment])
+
+        {!! Form::submit('Add Comment', ['class' => 'btn btn-info',]) !!}
+        {!! Form::close() !!}
     </div>
 </div>
 

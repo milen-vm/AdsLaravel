@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\StoreAd;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,8 +44,9 @@ class AdsController extends Controller
     {
 //        $ad = \Illuminate\Support\Facades\DB::table('ads')->find($id);
 //        $ad = Ad::find($id);
+        $comment = new Comment();
 
-        return view('ads.show', ['ad' => $ad]);
+        return view('ads.show', ['ad' => $ad, 'comment' => $comment]);
     }
 
     public function create()
@@ -68,7 +70,7 @@ class AdsController extends Controller
         return redirect(url('/ads/' . $ad->id));
     }
 
-    public function edit(Ad $ad)
+    public function edit(Request $request, Ad $ad)
     {
         return view('ads.edit', ['ad' => $ad]);
     }

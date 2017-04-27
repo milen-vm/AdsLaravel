@@ -25,3 +25,5 @@ Route::patch('/ads/{ad}', 'AdsController@update');
 
 Route::delete('/ads/{ad}', 'AdsController@destroy');
 
+Route::post('/ads/{ad}/comments', 'CommentsController@store');
+

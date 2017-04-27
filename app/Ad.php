@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Ad extends Model
 {
 
@@ -11,7 +9,6 @@ class Ad extends Model
     const ADS_LIST_PAGE_SIZE = 5;
 
     protected $table = 'ads';
-    protected $guarded = ['id'];
     protected $fillable = [
         'title',
         'text',
@@ -20,6 +17,11 @@ class Ad extends Model
         'is_free',
         'valid_until',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     public function scopeFree($query)
     {
@@ -30,5 +32,10 @@ class Ad extends Model
     public static function payed()
     {
         return static::where('is_free', false)->get();
+    }
+
+    public function addComment($text)
+    {
+        $this->comments()->create(['text' => $text]);
     }
 }

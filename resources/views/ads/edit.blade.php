@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-lg-6 col-lg-offset-3">
 
-        @include('ads.partial.errors', ['errors' => $errors])
+        @include('layout.errors', ['errors' => $errors])
 
         {!! Form::open(['url' => url('/ads/' . $ad->id), 'method' => 'patch']) !!}
 
