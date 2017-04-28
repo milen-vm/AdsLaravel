@@ -7,10 +7,14 @@ use App\Http\Requests\StoreAd;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Ad;
-use Illuminate\Support\Facades\Input;
 
 class AdsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
 
     public function index(Request $request)
     {
@@ -58,14 +62,14 @@ class AdsController extends Controller
 
     public function store(StoreAd $request)
     {
-        $ad = Ad::Create([
+        $ad = auth()->user()->publish(new Ad([
             'title' => $request->title,
             'text' => $request->text,
             'name' => $request->name,
             'phone' => $request->phone,
             'is_free' => ($request->is_free ? true : false),
             'valid_until' =>(Carbon::now()->addDays(Ad::DAYS_VALID_PERIOD))->toDateTimeString(),
-        ]);
+        ]));
 
         return redirect(url('/ads/' . $ad->id));
     }

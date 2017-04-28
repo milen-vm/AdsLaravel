@@ -10,6 +10,7 @@ class Ad extends Model
 
     protected $table = 'ads';
     protected $fillable = [
+        'user_id',
         'title',
         'text',
         'name',
@@ -17,6 +18,11 @@ class Ad extends Model
         'is_free',
         'valid_until',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function comments()
     {

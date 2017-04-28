@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-lg-6 col-lg-offset-3">
-    <h3 class="text-center">{{ $ad->title }}</h3>
+    <h3 class="text-center">{{ $ad->title }} - {{ $ad->user->name }}</h3>
     <div>
         <p>{{ $ad->text }}</p>
     </div>
@@ -37,8 +37,7 @@
         </ul>
     </div>
 
-    <hr>
-
+@if(\Illuminate\Support\Facades\Auth::check())
     @include('layout.errors')
 
     <div>
@@ -49,6 +48,9 @@
         {!! Form::submit('Add Comment', ['class' => 'btn btn-info',]) !!}
         {!! Form::close() !!}
     </div>
-</div>
+@else
+    <p>Login to add a comment.</p>
+@endif
 
+</div>
 @endsection

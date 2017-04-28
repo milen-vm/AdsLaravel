@@ -15,7 +15,7 @@ class CreateAdsTable extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->increments('id');
-//            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id');
             $table->string('title', 100);
             $table->text('text');
             $table->string('name', 50);
@@ -23,6 +23,8 @@ class CreateAdsTable extends Migration
             $table->boolean('is_free')->default(false);
             $table->timestamp('valid_until')->nullable();
             $table->timestamps();
+            $table->foreign('user_id', 'fk_ads_users_user_id')
+                ->references('id')->on('users')->onDelete('cascade');
         });
     }
 

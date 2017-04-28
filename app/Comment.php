@@ -11,6 +11,11 @@ class Comment extends Model
         'text',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function ad()
     {
         return $this->belongsTo(Ad::class);
