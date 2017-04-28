@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUser;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
 
     public function create()
     {
@@ -19,11 +25,11 @@ class RegistrationController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
-        // login
-        Auth::login($user);
-//        \auth()->login($user);
+
+//        Auth::login($user);
+        \auth()->login($user);
         return redirect()->route('ad.index');
     }
 }

@@ -8,6 +8,11 @@ use App\Http\Requests\StoreComment;
 class CommentsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(StoreComment $request, Ad $ad)
     {
         $ad->addComment($request->text);
