@@ -20,15 +20,19 @@ class AdsController extends Controller
     {
         $ads = new Ad();
         $queries = [];
-        $columns = [
-            'is_free',
-        ];
+//        $ads = $ads->filteredAndSorted($request->query());
 
-        foreach ($columns as $column) {
-            if ($request->has($columns)) {
-                $ads = $ads->where($column, $request->get($column));
-                $queries[$column] = $request->get($column);
-            }
+        $allowed = Ad::$filterPrams;
+        $filters = array_filter(
+            $request->query(),
+            function ($key) use ($allowed) {
+                return in_array($key, $allowed);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (count($filters) > 0) {
+            $ads = $ads->filter($filters);
         }
 
         if ($request->has('sort')) {
@@ -38,10 +42,10 @@ class AdsController extends Controller
             $ads = $ads->orderBy('created_at', 'desc');
         }
 
-        $ads = $ads->paginate(Ad::ADS_LIST_PAGE_SIZE)->appends($queries);
+        $ads = $ads->paginate(Ad::ADS_LIST_PAGE_SIZE)->appends($filters);
 //      $ads = Ad::latest()->paginate(Ad::ADS_LIST_PAGE_SIZE);
 
-        return view('ads.index', ['ads' => $ads,]);
+        return view('ads.index', ['ads' => $ads, 'queries' => array_merge($filters, $queries)]);
     }
 
     public function show(Ad $ad)

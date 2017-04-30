@@ -3,18 +3,18 @@
 @section('content')
 <h2 class="text-center">Ads List</h2>
 
-<div class="col-lg-10 col-lg-offset-1">
+<div class="col-md-10">
     <div class="row">
         <div class="col-lg-6">
             <strong>Filter: </strong>
-            <a href="{{ route('ad.index', ['is_free' => '1', 'sort' => request('sort'),]) }}">Free</a> |
-            <a href="{{ route('ad.index', ['is_free' => '0', 'sort' => request('sort'),]) }}">Payed</a> |
+            <a href="{{ route('ad.index', array_merge($queries, ['is_free' => '1',])) }}">Free</a> |
+            <a href="{{ route('ad.index', array_merge($queries, ['is_free' => '0',])) }}">Payed</a> |
             <a href="{{ route('ad.index') }}">All</a>
         </div>
         <div class="col-lg-6 text-right">
             <strong>Sort: </strong>
-            <a href="{{ route('ad.index', ['is_free' => request('is_free'), 'sort' => 'asc',]) }}">Ascending</a> |
-            <a href="{{ route('ad.index', ['is_free' => request('is_free'), 'sort' => 'desc',]) }}">Descending</a>
+            <a href="{{ route('ad.index', array_merge($queries, ['sort' => 'asc',])) }}">Ascending</a> |
+            <a href="{{ route('ad.index', array_merge($queries, ['sort' => 'desc',])) }}">Descending</a>
         </div>
     </div>
     <div class="table-responsive">
@@ -49,4 +49,7 @@
     {{ $ads->links() }}
     </div>
 </div>
+
+@include('layout.side', $queries)
+
 @endsection

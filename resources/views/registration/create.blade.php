@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-6 col-lg-offset-2">
         <h1>Register</h1>
 
         @include('layout.errors', ['errors' => $errors])
