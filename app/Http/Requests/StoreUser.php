@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class StoreUser extends FormRequest
 {
@@ -28,5 +30,17 @@ class StoreUser extends FormRequest
             'email' => 'required|unique:users,email|email|max:255',
             'password' => 'required|confirmed',
         ];
+    }
+
+    public function persist()
+    {
+        $user = User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => Hash::make($this->password),
+        ]);
+
+//        Auth::login($user);
+        \auth()->login($user);
     }
 }

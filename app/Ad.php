@@ -36,6 +36,11 @@ const ADS_LIST_PAGE_SIZE = 5;
         return $this->hasMany(Comment::class);
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'ad_category');
+    }
+
     public function scopeFilter($query, $filters)
     {
         foreach ($filters as $key => $value) {

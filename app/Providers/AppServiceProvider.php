@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Ad;
+use App\Category;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layout.side', function ($view) {
-            $view->with('archives', Ad::archives());
+            $archives = Ad::archives();
+            $categories = Category::has('ads')->pluck('name');
+
+            $view->with(['archives' => $archives, 'categories' => $categories]);
         });
     }
 

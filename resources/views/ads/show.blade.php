@@ -3,6 +3,16 @@
 @section('content')
 <div class="col-lg-6 col-lg-offset-3">
     <h3 class="text-center">{{ $ad->title }} - {{ $ad->user->name }}</h3>
+
+@if(count($ad->categories))
+    <div class="text-right">
+        <strong>Categories:</strong>
+    @foreach($ad->categories as $category)
+        <a href="/ads/categories/{{ $category->name }}">{{ $category->name }}</a>
+    @endforeach
+    </div>
+@endif
+
     <div>
         <p>{{ $ad->text }}</p>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Comment;
 use App\Http\Requests\StoreAd;
 use Carbon\Carbon;
@@ -18,7 +19,7 @@ class AdsController extends Controller
 
     public function index(Request $request)
     {
-        $ads = new Ad();
+        $ads = (new Ad())->with('user');
         $queries = [];
 //        $ads = $ads->filteredAndSorted($request->query());
 
@@ -60,8 +61,9 @@ class AdsController extends Controller
     public function create()
     {
         $ad = new Ad();
+        $categories = Category::all()->pluck('name', 'id')->all();
 
-        return view('ads.create', ['ad' => $ad]);
+        return view('ads.create', ['ad' => $ad, 'categories' => $categories, 'selected' => [],]);
     }
 
     public function store(StoreAd $request)
@@ -75,16 +77,27 @@ class AdsController extends Controller
             'valid_until' =>(Carbon::now()->addDays(Ad::DAYS_VALID_PERIOD))->toDateTimeString(),
         ]));
 
+        if (is_array($request->categories) && count($request->categories)) {
+            $categories = Category::whereRaw('id in (' . implode(',', $request->categories) . ')')->get();
+            $ad->categories()->attach($categories);
+        }
+
+        session()->flash('message', 'Your ad was published successfully!');
+
         return redirect(url('/ads/' . $ad->id));
     }
 
     public function edit(Request $request, Ad $ad)
     {
-        return view('ads.edit', ['ad' => $ad]);
+        $categories = Category::all()->pluck('name', 'id')->all();
+        $selected = $ad->categories()->pluck('id')->all();
+
+        return view('ads.edit', ['ad' => $ad, 'categories' => $categories, 'selected' => $selected,]);
     }
 
     public function update(StoreAd $request, Ad $ad)
     {
+        $ad->categories()->detach();
         $ad->fill([
             'title' => $request->title,
             'text' => $request->text,
@@ -93,6 +106,11 @@ class AdsController extends Controller
             'is_free' => ($request->is_free ? true : false),
         ]);
         $ad->save();
+
+        if (is_array($request->categories) && count($request->categories)) {
+            $categories = Category::whereRaw('id in (' . implode(',', $request->categories) . ')')->get();
+            $ad->categories()->attach($categories);
+        }
 
         return redirect(url('/ads/' . $ad->id));
     }

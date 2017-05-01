@@ -20,6 +20,8 @@ Route::patch('/ads/{ad}', 'AdsController@update');
 Route::delete('/ads/{ad}', 'AdsController@destroy');
 Route::post('/ads/{ad}/comments', 'CommentsController@store');
 
+Route::get('/ads/categories/{category}', 'CategoriesController@index');
+
 Route::get('/register', 'RegistrationController@create');
 Route::post('/register', 'RegistrationController@store');
 Route::get('/login', ['as' =>'login', 'uses' => 'SessionsController@create']);

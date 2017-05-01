@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUser;
-use App\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {
@@ -22,14 +19,9 @@ class RegistrationController extends Controller
 
     public function store(StoreUser $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $request->persist();
+        session()->flash('message', 'Thank you for your registration');
 
-//        Auth::login($user);
-        \auth()->login($user);
         return redirect()->route('ad.index');
     }
 }

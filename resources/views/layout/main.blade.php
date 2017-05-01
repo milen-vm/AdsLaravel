@@ -31,6 +31,12 @@
     @include('layout.nav')
 
     <div class="container">
+    @if($flash = session('message'))
+        <div id="flash" class="alert alert-success flash-message">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ $flash }}
+        </div>
+    @endif
         <div class="row">
 
             @yield('content')
