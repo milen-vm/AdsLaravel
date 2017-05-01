@@ -36,8 +36,12 @@
                         <span>{{ $ad->created_at->diffForHumans() }}</span>
                     </td>
                     <td class="text-center">
+                    @can('update', $ad)
                         <a class="btn btn-success" href="{{ url('/ads/' . $ad->id) . '/edit' }}">Edit</a>
+                    @endcan
+                    @can('delete', $ad)
                         @include('ads.partial.delete', ['id' => $ad->id])
+                    @endcan
                     </td>
                 </tr>
             @endforeach

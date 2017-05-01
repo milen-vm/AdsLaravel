@@ -37,6 +37,12 @@
             {{ $flash }}
         </div>
     @endif
+    @if($flash = session('error-message'))
+        <div id="flash" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Ops! </strong>{{ $flash }}
+        </div>
+    @endif
         <div class="row">
 
             @yield('content')

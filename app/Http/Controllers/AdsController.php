@@ -15,6 +15,8 @@ class AdsController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('can:update,ad')->only(['edit', 'update']);
+        $this->middleware('can:delete,ad')->only(['destroy']);
     }
 
     public function index(Request $request)
@@ -89,6 +91,11 @@ class AdsController extends Controller
 
     public function edit(Request $request, Ad $ad)
     {
+//        if (auth()->user()->cant('update', $ad)) {
+//            session()->flash('error-message', 'Unauthorized!');
+//            return redirect(url('/'));
+//        }
+
         $categories = Category::all()->pluck('name', 'id')->all();
         $selected = $ad->categories()->pluck('id')->all();
 
@@ -97,6 +104,11 @@ class AdsController extends Controller
 
     public function update(StoreAd $request, Ad $ad)
     {
+//        if (auth()->user()->cant('update', $ad)) {
+//            session()->flash('error-message', 'Unauthorized!');
+//            return redirect(url('/'));
+//        }
+
         $ad->categories()->detach();
         $ad->fill([
             'title' => $request->title,
